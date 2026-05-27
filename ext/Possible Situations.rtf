@@ -1,0 +1,81 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 UNO List of Possible Situations\par
+\par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs32 Error Detection\ulnone\fs22\par
+
+\pard\sa200\sl276\slmult1 Player touches device:\par
+\b0 The device is touched, triggering a false weight change, when the player did not play his round yet. Can also happen when a player decides to see the prior cards before that in the discard pile.\par
+Solution: Use load cell to make sure the weight changed after it settled is the same. Utilize also a camera if necessary. If the same, the device takes no action.\par
+How: table shake; player organizes deck of cards on the build plate; touching the deck; \par
+Code revision: may need to make a manual forward player via the button instead of the plate.\par
+Note: camera needed to determine if the person is organizing the discard pile. The round sequence of a pick up and drop off did not occur (same weight but completed round).\par
+\b Player Picks up but false touch:\b0\par
+A player picks up and is in the wait count down. But someone touches the device (fix the pile) or table shake or something else. Utilizing the weight change here is needed to determine if after card is picked up, that another card is put down after the false touch is settled. \par
+\b Player Plays when Not Player's Turn:\b0\par
+The device needs to keep track of whose turn it is and ignore the wrong player where appropriate. \par
+Solution: Utilize directional detection camera AND only if weight change. Audio sound stating error or whose actual turn it is. "John, not your turn, place card back. It is Mikes turn." Possibly app alerting the same with error siren. \par
+If weight decrease: the card will be placed in the deck some how so there will be movement. If card increase; card will be taken back from discard pile. If they completed an entire round (pick up and drop the same card sequence), the card will be taken from discard pile and placed into pick up pile. \par
+The camera can also be utilized to detect if a hand was over the pick up or discard pile. \par
+\par
+\b Weight decreased from discard pile:\b0\par
+UNO's game should never do this, unless it is a special custom rule. \par
+Solution: Camera sees hand drop off card then picks up a card from the discard pile. \par
+How: Player plays a card that he did not want to actually play for that round (depending on rules of the game if players allow it). He quickly picks it back up. OR, player plays the wrong card (does not match colors) and he picks it back up.\par
+If the discard pile was picked up before the next players weight change (not simply just directional detection or if their players lights are on), the device will turn back on that players group leds as if that player's turn. The wait time resets. \par
+\par
+\b Fast Hand Detected; No weight change:\b0\par
+It is possible that the impatient player wants to play his turn, but realizes that the player wants to finish his play because he changed his mind to actually discard a card. So, the player, though he was going into frame, pulled back out of frame. This occurs all while it is still the other players turn (wait time still counting). So, the leds go back to the player and the wait time count down resets. \par
+This could also happen if people are exchanging cards across the device or pointing to the device. \par
+\par
+\b Toss Card Slide Off:\b0\par
+A player toss his card too hard on the discard pile and the card slides off the deck. Then someone goes in to organize the discard pile. \par
+\par
+\par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs32 SLOW HAND\par
+
+\pard\sa200\sl276\slmult1\ulnone\b0\fs22 A player ran out of wait time. However, it shows the other players turn. If the current player did not make a weight change and a direcitonal detection saw coming into frame is from the prior player (who picked up but never put a card down), then that card will be counted for that player. This piece relies on good direcitonal detection. Let me know if it should be skipped for now and just use arrows in the app to go back to correct player. This is only if a card is discarded. If a card is picked up, it is clearly the next players turn and not a slow hand.\par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs32 FAST HAND\ulnone\b0\fs22\par
+
+\pard\sa200\sl276\slmult1\b Impatient Player due to wait time:\b0\par
+A player picks up a card, but decided not to put a card down. So, the next player is impatient and moves in to place his card down (because humans are good at reading if another human is done playing their hand compared to current device capabilities). When the card goes into frame, directional detection via camera quicly recognizes a fast hand play and immediately turns on that players led group light. This can be no card coming into frame or a card coming into frame. Either way, something is coming into frame to rather pick up a card or to discard a card. \par
+If the system do not recognize this quickly, that is okay. If picking up a card, the system has time to put that player's leds on. If the player discard a card instead of picking up before his leds come on, then it must go to the next appropriate player (depending on if a reverse was played or not). \par
+\b Impatient Player due to Action Card pick up:\par
+\b0 A player is picking up some cards due to a +2 or +4. But the next player is impatient and discards a card. \par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs36 Reshuffle\par
+
+\pard\sa200\sl276\slmult1\ulnone\b0\fs22 A reshuffle is when there are no more cards in the pick up deck. You need to pick up all the cards in the discard pile and within 10 seconds place 1 card down. However, I gave specific instructions to make this "new round" occur which will automatically move to the next dealer blinking player. Only 1 dealer blinking and there is no chaser. If no card is placed on the deck within 10 seconds, then it recognizes official new round. If 1 card is placed on the deck within 10 seconds, it reverts back to its original player's turn and the game continues (not new round) when the deck is placed on. I think it was like 1 or 2 seconds after all cards are off the plate. \par
+However, if 1 card remains on the plate (can program it less than two or three to make it easier), then it do not go to dealer mode. \ul\b\fs36\par
+
+\pard\sa200\sl276\slmult1\qc "UNO!"\par
+
+\pard\sa200\sl276\slmult1\ulnone\b0\fs24 If a player failed to say UNO! and the other player called him out, that player must pick up two cards. This only can happen if the next player did not play yet (pick up nor discard a card). So, if two cards are subtracted from the pick up deck and it is currently the next players turn, that is an easy indicator it is an UNO situation. Sure, the count down can occur still while it is that players turn (who needs to say UNO), but picking up two cards after playing can easily be an indicator for the UNO pick up two need.\par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs36 6 Cards Picked Up\par
+
+\pard\sa200\sl276\slmult1\ulnone\b0\fs22 Less common but that is the challenger who challenged another to prove they can discard a +4 card and lost. So, if 6 cards are being picked up or if 4 are being picked up.\par
+\par
+
+\pard\sa200\sl276\slmult1\qc\ul\b\fs32 Game Rules Detection\ulnone\b0\fs22\par
+
+\pard\sa200\sl276\slmult1 There are game rules that must be followed. For example, when a player places a green card down ontop of a red card and the numbers to not match. The app will make a notification or possibly audio. \par
+The game will not proceed forward until the card is taken back. \par
+\par
+\b OTHER ERROR DETECTIONS not listed in this document may also need to be implimented. Goal is to make the game play as natural as possible. Similar to enjoying the game of UNO multi-player on mobile app and the system does all the mechanics of the game so the user can focus on game play strategy instead of focusing on everything else. \par
+\par
+Research and development might be needed as well. Goal is 100% automatic mechanics of the game and assistance taken by the code/device instead of human needed input. \par
+
+\pard\sa200\sl276\slmult1\qc\ul\fs36\par
+\par
+\ulnone\b0\fs22\par
+
+\pard\sa200\sl276\slmult1\par
+\par
+\par
+\par
+}
+ 
